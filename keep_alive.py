@@ -1,12 +1,12 @@
-name: Keep Streamlit App Alive
-on:
-  schedule:
-    - cron: "*/30 * * * *"  # Her 30 dakikada bir çalıştır
+import requests
 
-jobs:
-  keep_alive:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Keep Alive
-        run: |
-          curl -X GET "https://excel-sheet-splitter-nwfuusmt5cakadaupkfxrl.streamlit.app/"
+URL = "https://excel-sheet-splitter-nwfuusmt5cakadaupkfxrl.streamlit.app/"
+
+try:
+    response = requests.get(URL)
+    if response.status_code == 200:
+        print("✅ Uygulama aktif, Keep-Alive başarılı!")
+    else:
+        print(f"⚠️ Bağlantı başarısız! Hata Kodu: {response.status_code}")
+except Exception as e:
+    print(f"❌ Hata oluştu: {e}")
